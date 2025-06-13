@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的游戏站</title>
+    <style>
+        body { text-align:center; font-family:Arial; }
+        .game { display:inline-block; margin:20px; }
+        img { width:200px; border-radius:10px; }
+    </style>
+</head>
+<body>
+    <h1>🎮 欢迎来到我的游戏站！</h1>
+    <div id="games-container"></div>
+    
+    <script>
+        // 游戏数据：名称 + 嵌入链接
+        const games = [
+            { name: "2048", link: "/2048" },
+            { name: "吃豆人", link: "/pacman" },
+            { name: "国际象棋", link: "/chess" }
+        ];
+        
+        // 自动生成游戏入口
+        let html = "";
+        games.forEach(game => {
+            html += `<div class="game">
+                <a href="${game.link}">
+                <div style="background:#eee;padding:20px;border-radius:10px">
+                    <h3>${game.name}</h3>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%2390CAF9' width='200' height='200'/%3E%3Ctext fill='%23000' font-size='26' x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle'%3E${game.name}%3C/text%3E%3C/svg%3E" alt="${game.name}">
+                </div></a>
+            </div>`;
+        });
+        
+        document.getElementById("games-container").innerHTML = html;
+    </script>
+</body>
+</html>
