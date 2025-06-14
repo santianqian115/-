@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kabuto Park Demo - 探索奇妙甲虫世界的休闲冒险游戏。与友善的昆虫互动，解开森林谜题，体验宁静而美丽的自然之旅。">
+  <meta name="keywords" content="Kabuto Park, beetle game, nature exploration, insect adventure, Doot, 甲虫公园, 昆虫冒险, 自然探索">
+  <title>Kabuto Park Demo | 甲虫公园探险</title>
+  <link rel="canonical" href="https://dppskloine.xyz">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* 语言切换样式 */
+    body.lang-en .lang-zh { display: none; }
+    body.lang-zh .lang-en { display: none; }
+    
+    /* 游戏iframe容器样式 */
+    .game-container {
+      width: 100%;
+      max-width: 652px;
+      aspect-ratio: 552/167;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .game-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .game-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    /* 甲虫漫步动画 */
+    @keyframes beetleWalk {
+      0% { transform: translateX(-10px) rotate(-5deg); }
+      50% { transform: translateX(10px) rotate(5deg); }
+      100% { transform: translateX(-10px) rotate(-5deg); }
+    }
+    
+    .beetle-animation {
+      animation: beetleWalk 6s infinite ease-in-out;
+      transform-origin: center bottom;
+    }
+    
+    /* 脉动动画 */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    
+    /* 树叶飘动动画 */
+    @keyframes leafSway {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+    
+    .leaf-animation {
+      animation: leafSway 3s infinite ease-in-out;
+      transform-origin: center top;
+    }
+    
+    /* 自然背景渐变 */
+    .nature-gradient {
+      background: linear-gradient(135deg, #ecf5e7 0%, #d6eac7 100%);
+      position: relative;
+    }
+    
+    /* Apple风格字体 */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    
+    /* 页脚背景 */
+    .footer-gradient {
+      background: linear-gradient(135deg, #e8f3e4 0%, #c8e3b5 100%);
+    }
+  </style>
+</head>
+<body class="lang-en bg-white text-gray-800 antialiased min-h-screen">
+  <!-- 顶部导航 -->
+  <header class="container mx-auto px-4 py-6 flex justify-between items-center">
+    <div class="text-2xl font-bold text-green-700 flex items-center">
+      <svg class="w-8 h-8 mr-2 inline-block beetle-animation" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 18.5C15.5899 18.5 18.5 15.5899 18.5 12C18.5 8.41015 15.5899 5.5 12 5.5C8.41015 5.5 5.5 8.41015 5.5 12C5.5 15.5899 8.41015 18.5 12 18.5Z" fill="#5c8a58" stroke="#2f572c" stroke-width="1"/>
+        <circle cx="9.5" cy="9.5" r="1.5" fill="#2f572c"/>
+        <circle cx="14.5" cy="9.5" r="1.5" fill="#2f572c"/>
+        <path d="M7 15C8.5 16.5 10.5 17 12 17C13.5 17 15.5 16.5 17 15" stroke="#2f572c" stroke-width="1" stroke-linecap="round"/>
+        <path d="M4 10C3 8 3 6 4 4" stroke="#5c8a58" stroke-width="1" stroke-linecap="round"/>
+        <path d="M20 10C21 8 21 6 20 4" stroke="#5c8a58" stroke-width="1" stroke-linecap="round"/>
+      </svg>
+      <span>Kabuto Park</span>
+    </div>
+    <div class="flex space-x-2">
+      <button id="btn-en" class="px-3 py-1 rounded-md bg-green-600 text-white font-medium transition duration-300 hover:bg-green-700">EN</button>
+      <button id="btn-zh" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 font-medium transition duration-300 hover:bg-gray-300">中文</button>
+    </div>
+  </header>
+  
+  <main class="container mx-auto px-4 py-6 max-w-4xl">
+    <!-- Hero部分 -->
+    <section class="text-center mb-12 nature-gradient py-10 px-4 rounded-xl relative overflow-hidden">
+      <!-- 装饰性背景元素 -->
+      <div class="absolute top-5 left-10 opacity-20 leaf-animation">
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 3C7.5 3.5 10.5 5.5 12 9C13.5 5.5 16.5 3.5 18 3C18 4.5 17 8.5 14 10.5C17 12 20 15 21 18C19.5 17.5 16.5 15.5 15 12C13.5 15.5 10.5 17.5 9 18C8 15 11 12 12 10.5C9 8.5 8 4.5 8 3" fill="#4caf50" opacity="0.2"/>
+        </svg>
+      </div>
+      <div class="absolute bottom-5 right-10 opacity-20 leaf-animation" style="animation-delay: 0.5s">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 3C7.5 3.5 10.5 5.5 12 9C13.5 5.5 16.5 3.5 18 3C18 4.5 17 8.5 14 10.5C17 12 20 15 21 18C19.5 17.5 16.5 15.5 15 12C13.5 15.5 10.5 17.5 9 18C8 15 11 12 12 10.5C9 8.5 8 4.5 8 3" fill="#4caf50" opacity="0.2"/>
+        </svg>
+      </div>
+      
+      <h1 class="text-5xl md:text-6xl font-bold mb-4 relative text-green-800">
+        <span class="lang-en">KABUTO PARK</span>
+        <span class="lang-zh">甲虫公园</span>
+        <span class="text-xl block mt-2 font-normal text-green-600">DEMO</span>
+      </h1>
+      <p class="text-xl text-gray-700 max-w-2xl mx-auto mb-8">
+        <span class="lang-en">Explore a miniature world of friendly beetles in an enchanting forest adventure</span>
+        <span class="lang-zh">在迷人的森林冒险中探索友好甲虫的微型世界</span>
+      </p>
+      
+      <!-- 高亮的行动号召按钮 -->
+      <a href="#play-now" class="inline-block px-8 py-4 bg-green-600 text-white font-bold rounded-full text-lg shadow-lg hover:bg-green-700 transition duration-300 pulse-animation">
+        <span class="lang-en">PLAY NOW</span>
+        <span class="lang-zh">立即体验</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </section>
+    
+    <!-- 游戏试玩 - 最显眼的位置 -->
+    <section id="play-now" class="mb-16 pt-4">
+      <h2 class="text-3xl font-bold mb-6 text-center text-green-800">
+        <span class="lang-en">Start Your Adventure</span>
+        <span class="lang-zh">开启冒险</span>
+      </h2>
+      <div class="game-container">
+        <iframe width="552" height="167" frameborder="0" src="https://itch.io/embed/3343113">
+          <a href="https://dodoot.itch.io/kabuto-park">Kabuto Park Demo by Doot</a>
+        </iframe>
+      </div>
+    </section>
+    
+    <!-- 游戏介绍 - 丰富且有吸引力 -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6 text-green-800 border-l-4 border-green-500 pl-3">
+        <span class="lang-en">The Tiny Wonder of Kabuto Park</span>
+        <span class="lang-zh">甲虫公园的微小奇迹</span>
+      </h2>
+      <div class="text-gray-700 leading-relaxed space-y-4">
+        <p>
+          <span class="lang-en">
+            In a secluded corner of an ancient forest lies a miniature world invisible to human eyes — Kabuto Park, a thriving ecosystem where beetles are the size of people, leaves become massive canopies, and dewdrops transform into shimmering lakes.
+          </span>
+          <span class="lang-zh">
+            在一片古老森林的隐秘角落，存在着一个人类肉眼看不见的微型世界——甲虫公园，一个繁荣的生态系统，在那里甲虫有人类大小，树叶变成巨大的顶棚，露珠化身为闪闪发光的湖泊。
+          </span>
+        </p>
+        <p>
+          <span class="lang-en">
+            You are a curious young beetle who has just earned their explorer's badge. Armed with nothing but your sense of wonder and a trusty magnifying glass, you set out to document the hidden treasures and untold stories of Kabuto Park's remarkable inhabitants.
+          </span>
+          <span class="lang-zh">
+            你是一只刚获得探险家徽章的好奇小甲虫。除了好奇心和一个可靠的放大镜外一无所有，你开始记录甲虫公园非凡居民们的隐藏宝藏和未讲述的故事。
+          </span>
+        </p>
+        <p>
+          <span class="lang-en">
+            As you venture deeper into the park, you'll uncover the gentle rhythm of beetle society, help solve everyday problems for your six-legged neighbors, and perhaps even discover why strange shadows have been appearing at the edge of the forest lately...
+          </span>
+          <span class="lang-zh">
+            当你深入公园探险时，你会发现甲虫社会的温和节奏，帮助你的六足邻居解决日常问题，甚至可能发现为什么最近森林边缘会出现奇怪的影子……
+          </span>
+        </p>
+        <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500 mt-6">
+          <p class="italic">
+            <span class="lang-en">"The smallest leaf holds the greatest adventures, and the tiniest creatures tell the most magnificent stories."</span>
+            <span class="lang-zh">"最小的叶子蕴藏最伟大的冒险，最微小的生物讲述最壮观的故事。"</span>
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 游戏特点 -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6 text-green-800 border-l-4 border-green-500 pl-3">
+        <span class="lang-en">Discover the Magic</span>
+        <span class="lang-zh">发现魔力</span>
+      </h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="p-5 bg-gradient-to-br from-green-50 to-white rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-green-100">
+          <div class="text-green-600 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin
