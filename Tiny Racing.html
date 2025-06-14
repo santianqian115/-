@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tiny Racing - 疾驰于像素世界的极速赛车游戏。体验紧张刺激的迷你赛道，挑战最快圈速！">
+  <meta name="keywords" content="Tiny Racing, online game, pixel racing, retro racing game, Ben James, 像素赛车, 复古赛车游戏">
+  <title>Tiny Racing | 像素世界的极速体验</title>
+  <link rel="canonical" href="https://dppskloine.xyz">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* 语言切换样式 */
+    body.lang-en .lang-zh { display: none; }
+    body.lang-zh .lang-en { display: none; }
+    
+    /* 游戏iframe容器样式 */
+    .game-container {
+      width: 100%;
+      max-width: 652px;
+      aspect-ratio: 552/167;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .game-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .game-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    /* Apple风格字体 */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    
+    /* 呼吸动画 */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    
+    /* 赛车移动动画 */
+    @keyframes driveBy {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(300%); }
+    }
+    
+    .drive-animation {
+      animation: driveBy 8s linear infinite;
+    }
+    
+    /* 方格旗动画 */
+    @keyframes flagWave {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+    
+    .flag-animation {
+      animation: flagWave 1.5s ease-in-out infinite;
+    }
+    
+    /* 赛道背景 */
+    .track-gradient {
+      background: linear-gradient(to right, #f5f5f7 0%, #e4e4e9 50%, #f5f5f7 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .track-gradient::before {
+      content: '';
+      position: absolute;
+      height: 10px;
+      width: 100%;
+      top: 50%;
+      left: 0;
+      background: repeating-linear-gradient(90deg, #ddd, #ddd 20px, transparent 20px, transparent 40px);
+      margin-top: -5px;
+      z-index: 1;
+    }
+    
+    /* 页面底部渐变 */
+    .footer-gradient {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4ecfb 100%);
+    }
+  </style>
+</head>
+<body class="lang-en bg-white text-gray-800 antialiased min-h-screen">
+  <!-- 顶部导航 -->
+  <header class="container mx-auto px-4 py-6 flex justify-between items-center">
+    <div class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
+      <span>Tiny Racing</span>
+    </div>
+    <div class="flex space-x-2">
+      <button id="btn-en" class="px-3 py-1 rounded-md bg-blue-600 text-white font-medium transition duration-300 hover:bg-blue-700">EN</button>
+      <button id="btn-zh" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 font-medium transition duration-300 hover:bg-gray-300">中文</button>
+    </div>
+  </header>
+  
+  <main class="container mx-auto px-4 py-6 max-w-4xl">
+    <!-- Hero部分 -->
+    <section class="text-center mb-10">
+      <div class="track-gradient py-8 px-4 rounded-xl mb-8 relative">
+        <div class="drive-animation absolute z-10" style="top: 50%; transform: translateY(-50%);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 32" width="64" height="32" fill="#ff3b30">
+            <rect x="5" y="20" width="54" height="12" rx="4" />
+            <rect x="10" y="10" width="35" height="12" rx="2" />
+            <circle cx="15" cy="32" r="6" fill="#333" />
+            <circle cx="15" cy="32" r="3" fill="#999" />
+            <circle cx="45" cy="32" r="6" fill="#333" />
+            <circle cx="45" cy="32" r="3" fill="#999" />
+          </svg>
+        </div>
+        
+        <h1 class="text-5xl md:text-6xl font-bold mb-4 relative z-20">
+          <span class="lang-en">TINY RACING</span>
+          <span class="lang-zh">迷你赛车</span>
+        </h1>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8 relative z-20">
+          <span class="lang-en">Speed through pixel-perfect tracks in the ultimate retro racing challenge</span>
+          <span class="lang-zh">在像素完美的赛道上飞驰，体验终极复古赛车挑战</span>
+        </p>
+      </div>
+      
+      <!-- 高亮的行动号召按钮 -->
+      <a href="#play-now" class="inline-block px-8 py-4 bg-blue-600 text-white font-bold rounded-full text-lg shadow-lg hover:bg-blue-700 transition duration-300 pulse-animation mb-10">
+        <span class="lang-en">RACE NOW</span>
+        <span class="lang-zh">立即竞速</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 inline-block flag-animation" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v18h2v-8h14v8h2V3H3z" />
+        </svg>
+      </a>
+    </section>
+    
+    <!-- 游戏试玩 - 最显眼的位置 -->
+    <section id="play-now" class="mb-16 pt-4">
+      <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">
+        <span class="lang-en">Start Your Engine</span>
+        <span class="lang-zh">发动引擎</span>
+      </h2>
+      <div class="game-container">
+        <iframe src="https://itch.io/embed/3638229" frameborder="0">
+          <a href="https://benjames171.itch.io/tiny-racing">Tiny Racing by Ben James</a>
+        </iframe>
+      </div>
+    </section>
+    
+    <!-- 游戏介绍 - 丰富且有吸引力 -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6 text-gray-800 border-l-4 border-blue-500 pl-3">
+        <span class="lang-en">The Ultimate Racing Experience</span>
+        <span class="lang-zh">终极赛车体验</span>
+      </h2>
+      <div class="text-gray-700 leading-relaxed space-y-4">
+        <p>
+          <span class="lang-en">
+            Tiny Racing throws you into a world where every millisecond counts. Behind the wheel of your pixel-perfect vehicle, you'll navigate through meticulously designed tracks that test your reflexes and racing instincts to their limits.
+          </span>
+          <span class="lang-zh">
+            迷你赛车将你带入一个每一毫秒都至关重要的世界。驾驶你的像素完美车辆，你将在精心设计的赛道上驰骋，这些赛道会将你的反应能力和赛车直觉推向极限。
+          </span>
+        </p>
+        <p>
+          <span class="lang-en">
+            What seems simple at first glance quickly evolves into an addictive pursuit of the perfect racing line. Will you master the art of drifting around tight corners? Can you find the hidden shortcuts that could shave precious seconds off your lap time?
+          </span>
+          <span class="lang-zh">
+            初看简单的游戏很快就会演变成对完美赛车线的上瘾追求。你能掌握在急转弯处漂移的艺术吗？你能找到隐藏的捷径，为你的圈速节省宝贵的秒数吗？
+          </span>
+        </p>
+        <p>
+          <span class="lang-en">
+            As you progress through increasingly challenging circuits, you'll unlock new vehicles, each with unique handling characteristics that will force you to adapt your driving strategy. The question isn't just whether you can win – it's whether you can dominate the leaderboards and claim your place among the racing elite.
+          </span>
+          <span class="lang-zh">
+            随着你在越来越具挑战性的赛道上的进步，你将解锁新的车辆，每辆车都有独特的操控特性，这将迫使你调整驾驶策略。问题不仅仅是你能否获胜——而是你能否统治排行榜并在赛车精英中占有一席之地。
+          </span>
+        </p>
+        <div class="bg-blue-100 p-4 rounded-lg border-l-4 border-blue-500 mt-6">
+          <p class="italic">
+            <span class="lang-en">"Speed isn't just about how fast you go – it's about how perfectly you handle every turn. The track awaits. Are you ready?"</span>
+            <span class="lang-zh">"速度不仅仅关乎你有多快——而是关乎你如何完美处理每一个转弯。赛道已准备就绪。你准备好了吗？"</span>
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 游戏特点 -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6 text-gray-800 border-l-4 border-blue-500 pl-3">
+        <span class="lang-en">Race Features</span>
+        <span class="lang-zh">赛车特点</span>
+      </h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="p-5 bg-gradient-to-br from-blue-50 to-white rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-blue-100">
+          <div class="text-blue-500 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2 text-blue-600">
+            <span class="lang-en">Lightning-Fast Controls</span>
+            <span class="lang-zh">闪电般的控制</span>
+          </h3>
+          <p class="text-gray-700">
+            <span class="lang-en">Responsive, precise controls that give you the confidence to push your car to its limits on every corner.</span>
+            <span class="lang-zh">响应灵敏、精确的控制，让你有信心在每个转弯处将赛车推向极限。</span>
+          </p>
+        </div>
+        <div class="p-5 bg-gradient-to-br from-blue-50 to-white rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-blue-100">
+          <div class="text-blue-500 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2 text-blue-600">
+            <span class="lang-en">Challenging Tracks</span>
+            <span class="lang-zh">具挑战性的赛道</span>
+          </h3>
+          <p class="text-gray-700">
+            <span class="lang-en">Multiple meticulously designed race circuits with unique obstacles, shortcuts and racing lines to discover.</span>
+            <span class="lang-zh">多条精心设计的赛道，拥有独特的障碍物、捷径和赛车线等待你发现。</span>
+          </p>
+        </div>
+        <div class="p-5 bg-gradient-to-br from-blue-50 to-white rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-blue-100">
+          <div class="text-blue-500 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2 text-blue-600">
+            <span class="lang-en">Pixel-Perfect Graphics</span>
+            <span class="lang-zh">像素完美画面</span>
+          </h3>
+          <p class="text-gray-700">
+            <span class="lang-en">Nostalgic retro visuals combined with smooth animation create a racing experience that's both charming and competitive.</span>
+            <span class="lang-zh">怀旧的复古视觉效果与流畅的动画相结合，打造既有魅力又具竞争力的赛车体验。</span>
+          </p>
+        </div>
+        <div class="p-5 bg-gradient-to-br from-blue-50 to-white rounded-lg shadow-sm hover:shadow-md transition duration-300 border border-blue-100">
+          <div class="text-blue-500 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2 text-blue-600">
+            <span class="lang-en">Global Leaderboards</span>
+            <span class="lang-zh">全球排行榜</span>
+          </h3>
+          <p class="text-gray-700">
+            <span class="lang-en">Compare your best times with racers from around the world and fight to climb to the top of the rankings.</span>
+            <span class="lang-zh">将你的最佳时间与世界各地的车手进行比较，争取攀登排名榜首。</span>
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 赛车技巧 -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6 text-gray-800 border-l-4 border-blue-500 pl-3">
+        <span class="lang-en">Racing Tips</span>
+        <span class="lang-zh">赛车技巧</span>
+      </h2>
+      <div class="bg-blue-50 p-6 rounded-lg border border-blue-100">
+        <ul class="list-disc pl-5 space-y-3">
+          <li>
+            <span class="lang-en"><strong>Master the drift:</strong> Tap the brake while turning to initiate a drift, giving you better control through tight corners.</span>
+            <span class="lang-zh"><strong>掌握漂移：</strong>转弯时轻点刹车开始漂移，让你在急转弯中获得更好的控制。</span>
+          </li>
+          <li>
+            <span class="lang-en"><strong>Find the racing line:</strong> The fastest path through any track isn't always the most obvious – experiment with different approaches to each corner.</span>
+            <span class="lang-zh"><strong>寻找赛车线：</strong>通过任何赛道的最快路径并不总是最明显的——尝试不同的方式来处理每个转弯。</span>
+          </li>
+          <li>
+            <span class="lang-en"><strong>Look for shortcuts:</strong> Some tracks have hidden paths that can save precious seconds – but they often require precise driving to navigate successfully.</span>
+            <span class="lang-zh"><strong>寻找捷径：</strong>有些赛道有隐藏的路径可以节省宝贵的时间——但它们通常需要精确驾驶才能成功通过。</span>
+          </li>
+          <li>
+            <span class="lang-en"><strong>Learn each vehicle:</strong> Every car handles differently – take time to understand the unique acceleration, top speed and grip characteristics of each one.</span>
+            <span class="lang-zh"><strong>了解每辆车：</strong>每辆车的操控方式都不同——花时间了解每辆车独特的加速度、最高速度和抓地力特性。</span>
+          </li>
+          <li>
+            <span class="lang-en"><strong>Practice makes perfect:</strong> The difference between an average lap and a record-breaking one often comes down to millisecond-perfect timing and positioning.</span>
+            <span class="lang-zh"><strong>熟能生巧：</strong>一般圈速与破纪录圈速之间的差异往往在于毫秒级的完美时机和位置。</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- 玩家评价 -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6 text-gray-800 border-l-4 border-blue-500 pl-3">
+        <span class="lang-en">Player Reviews</span>
+        <span class="lang-zh">玩家评价</span>
+      </h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white p-5 rounded-lg shadow border border-gray-100">
+          <div class="flex items-center mb-4">
+            <div class="text-yellow-400 flex">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </div>
+            <div class="ml-2 text-gray-600 text-sm">
+              <span class="lang-en">Michael R.</span>
+              <span class="lang-zh">迈克尔 R.</span>
+            </div>
+          </div>
+          <p class="text-gray-700 italic">
+            <span class="lang-en">"I haven't been this hooked on a racing game in years! The controls are so tight and responsive, and the track design is brilliant. Just one more lap... always one more lap."</span>
+            <span class="lang-zh">"这么多年来，我还没有如此沉迷于一款赛车游戏！控制如此精准和响应迅速，赛道设计非常出色。总是想再来一圈...永远都是再一圈。"</span>
+          </p>
+        </div>
+        <div class="bg-white p-5 rounded-lg shadow border border-gray-100">
+          <div class="flex items-center mb-4">
+            <div class="text-yellow-400 flex">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </div>
+            <div class="ml-2 text-gray-600 text-sm">
+              <span class="lang-en">Sarah J.</span>
+              <span class="lang-zh">莎拉 J.</span>
+            </div>
+          </div>
+          <p class="text-gray-700 italic">
+            <span class="lang-en">"Perfect balance between simplicity and depth. Easy to pick up, but mastering all the tracks and beating your own records is incredibly satisfying. The retro aesthetic is just perfect!"</span>
+            <span class="lang-zh">"在简单性和深度之间取得了完美平衡。容易上手，但掌握所有赛道并打破自己的记录令人难以置信地满足。复古美学简直完美！"</span>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- 行动号召和页脚 -->
+  <div class="footer-gradient py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800">
+        <span class="lang-en">Ready to Hit the Track?</span>
+        <span class="lang-zh">准备上赛道了吗？</span>
+      </h2>
+      <a href="#play-now" class="inline-block px-8 py-4 bg-blue-600 text-white font-bold rounded-full text-lg shadow-lg hover:bg-blue-700 transition duration-300">
+        <span class="lang-en">RACE NOW</span>
+        <span class="lang-zh">立即竞速</span>
+      </a>
+    </div>
+  </div>
+  
+  <!-- 页脚 -->
+  <footer class="bg-gray-50 py-6 border-t border-gray-200">
+    <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+      <p>
+        <span class="lang-en">© 2025 Tiny Racing. All rights reserved.</span>
+        <span class="lang-zh">© 2025 迷你赛车。保留所有权利。</span>
+      </p>
+      <p class="mt-2">
+        <span class="lang-en">Created by Ben James</span>
+        <span class="lang-zh">由 Ben James 创作</span>
+      </p>
+    </div>
+  </footer>
+  
+  <script>
+    // 语言切换功能
+    document.addEventListener('DOMContentLoaded', function() {
+      const btnEn = document.getElementById('btn-en');
+      const btnZh = document.getElementById('btn-zh');
+      
+      // 检查本地存储中是否有语言偏好
+      const savedLang = localStorage.getItem('language') || 'en';
+      document.body.className = `lang-${savedLang}`;
+      
+      // 根据当前语言更新按钮样式
+      updateButtonStyles(savedLang);
+      
+      btnEn.addEventListener('click', function() {
+        document.body.className = 'lang-en';
+        localStorage.setItem('language', 'en');
+        updateButtonStyles('en');
+      });
+      
+      btnZh.addEventListener('click', function() {
+        document.body.className = 'lang-zh';
+        localStorage.setItem('language', 'zh');
+        updateButtonStyles('zh');
+      });
+      
+      function updateButtonStyles(lang) {
+        if (lang === 'en') {
+          btnEn.className = 'px-3 py-1 rounded-md bg-blue-600 text-white font-medium transition duration-300 hover:bg-blue-700';
+          btnZh.className = 'px-3 py-1 rounded-md bg-gray-200 text-gray-700 font-medium transition duration-300 hover:bg-gray-300';
+        } else {
+          btnEn.className = 'px-3 py-1 rounded-md bg-gray-200 text-gray-700 font-medium transition duration-300 hover:bg-gray-300';
+          btnZh.className = 'px-3 py-1 rounded-md bg-blue-600 text-white font-medium transition duration-300 hover:bg-blue-700';
+        }
+      }
+      
+      // 平滑滚动
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
