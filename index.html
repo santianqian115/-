@@ -1,38 +1,146 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>我的游戏站</title>
-    <style>
-        body { text-align:center; font-family:Arial; }
-        .game { display:inline-block; margin:20px; }
-        img { width:200px; border-radius:10px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>dppskloine.xyz | Web Game Arcade</title>
+  <meta name="description" content="Play Tiny Racing, Idle Mage Life, FU Money and more. 精选网页小游戏聚合站，立即畅玩，无需下载！" />
+  <link rel="canonical" href="https://dppskloine.xyz/" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body.lang-en .lang-zh { display:none; }
+    body.lang-zh .lang-en { display:none; }
+    .tag{display:inline-block;background:#f9fafb;padding:0.15em 0.7em;border-radius:12px;font-size:0.9em;color:#60a5fa;margin-right:0.5em;}
+    .star{color:#fbbf24;}
+  </style>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='20' font-size='20'>🎮</text></svg>">
 </head>
-<body>
-    <h1>🎮 欢迎来到我的游戏站！</h1>
-    <div id="games-container"></div>
-    
-    <script>
-        // 游戏数据：名称 + 嵌入链接
-        const games = [
-            { name: "2048", link: "/2048" },
-            { name: "吃豆人", link: "/pacman" },
-            { name: "国际象棋", link: "/chess" }
-        ];
-        
-        // 自动生成游戏入口
-        let html = "";
-        games.forEach(game => {
-            html += `<div class="game">
-                <a href="${game.link}">
-                <div style="background:#eee;padding:20px;border-radius:10px">
-                    <h3>${game.name}</h3>
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%2390CAF9' width='200' height='200'/%3E%3Ctext fill='%23000' font-size='26' x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle'%3E${game.name}%3C/text%3E%3C/svg%3E" alt="${game.name}">
-                </div></a>
-            </div>`;
-        });
-        
-        document.getElementById("games-container").innerHTML = html;
-    </script>
+<body class="lang-en bg-gray-50 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-white/90 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="rounded-full bg-gradient-to-br from-blue-500 to-green-500 w-10 h-10 flex items-center justify-center text-white text-2xl font-bold">🎮</span>
+        <span class="font-bold text-blue-700 text-xl">dppskloine.xyz</span>
+      </div>
+      <div class="space-x-1">
+        <button id="lang-en" class="px-3 py-1 rounded-md bg-blue-600 text-white font-medium shadow hover:bg-blue-700">EN</button>
+        <button id="lang-zh" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 font-medium shadow hover:bg-gray-300">中文</button>
+      </div>
+    </div>
+    <!-- 公告条 -->
+    <div class="w-full py-2 bg-blue-50 text-sm text-blue-700 font-medium text-center">
+      <span class="lang-en">🚀 New! <b>FU Money</b> is now online. Have fun!</span>
+      <span class="lang-zh">🚀 新上线：《极致赚钱 FU Money》欢迎体验！</span>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-1">
+    <section class="max-w-5xl mx-auto px-4 py-7">
+      <!-- 搜索框 -->
+      <div class="mb-6 max-w-xl mx-auto flex items-center gap-3">
+        <input class="grow rounded-lg px-4 py-2 shadow text-base border border-gray-200 focus:outline-blue-300" type="text" autocomplete="off"
+          placeholder="🔎 Search game / 搜索游戏 (静态展示, 点卡片进游戏)" disabled>
+        <span class="px-3 py-1 rounded text-gray-400 text-xs lang-en">Powered by dppskloine.xyz</span>
+        <span class="px-3 py-1 rounded text-gray-400 text-xs lang-zh">dppskloine.xyz荣誉出品</span>
+      </div>
+      <h1 class="text-center text-3xl md:text-4xl font-bold mb-8 text-blue-800">
+        <span class="lang-en">Web Indie Game Arcade</span>
+        <span class="lang-zh">网页精品小游戏合集</span>
+      </h1>
+      <div class="grid gap-8 grid-cols-1 md:grid-cols-3">
+        <!-- Game 1 -->
+        <div class="rounded-xl bg-white shadow hover:shadow-lg transition p-5 flex flex-col items-center relative">
+          <img src="https://via.placeholder.com/320x200/5a7bf6/fff?text=Tiny+Racing" alt="Tiny Racing" class="rounded mb-4 object-cover w-full aspect-video">
+          <div class="absolute top-3 right-3 flex items-center gap-1">
+            <span class="star">★★★★★</span>
+          </div>
+          <h2 class="text-xl font-bold mb-2 text-blue-700 text-center">
+            <span class="lang-en">Tiny Racing</span><span class="lang-zh">小赛车</span>
+          </h2>
+          <div class="mb-1">
+            <span class="tag">Racing</span>
+            <span class="tag lang-zh">竞速</span>
+          </div>
+          <p class="mb-4 text-gray-600 text-center text-sm">
+            <span class="lang-en">Retro pixel car fun, drift and compete on mini tracks!</span>
+            <span class="lang-zh">像素风小车漂移，体验微缩赛道速度！</span>
+          </p>
+          <a href="tiny-racing.html" class="w-full block text-center px-5 py-2 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+            <span class="lang-en">Play Now</span>
+            <span class="lang-zh">进入</span>
+          </a>
+        </div>
+        <!-- Game 2 -->
+        <div class="rounded-xl bg-white shadow hover:shadow-lg transition p-5 flex flex-col items-center relative">
+          <img src="https://via.placeholder.com/320x200/50c878/fff?text=Idle+Mage+Life" alt="Idle Mage Life" class="rounded mb-4 object-cover w-full aspect-video">
+          <div class="absolute top-3 right-3 flex items-center gap-1">
+            <span class="star">★★★★☆</span>
+          </div>
+          <h2 class="text-xl font-bold mb-2 text-green-700 text-center">
+            <span class="lang-en">Idle Mage Life</span><span class="lang-zh">法师挂机人生</span>
+          </h2>
+          <div class="mb-1">
+            <span class="tag">Idle</span>
+            <span class="tag">Strategy</span>
+            <span class="tag lang-zh">挂机</span>
+            <span class="tag lang-zh">策略</span>
+          </div>
+          <p class="mb-4 text-gray-600 text-center text-sm">
+            <span class="lang-en">Grow your magical powers and gather riches in this idle adventure!</span>
+            <span class="lang-zh">修炼法术打造财富，轻松挂机冒险！</span>
+          </p>
+          <a href="idle-mage-life.html" class="w-full block text-center px-5 py-2 rounded-full bg-green-600 text-white font-semibold hover:bg-green-700 transition">
+            <span class="lang-en">Play Now</span><span class="lang-zh">进入</span>
+          </a>
+        </div>
+        <!-- Game 3 -->
+        <div class="rounded-xl bg-white shadow hover:shadow-lg transition p-5 flex flex-col items-center relative">
+          <img src="https://via.placeholder.com/320x200/db279c/fff?text=FU+Money" alt="FU Money" class="rounded mb-4 object-cover w-full aspect-video">
+          <div class="absolute top-3 right-3 flex items-center gap-1">
+            <span class="star">★★★★☆</span>
+          </div>
+          <h2 class="text-xl font-bold mb-2 text-pink-700 text-center">
+            <span class="lang-en">FU Money</span><span class="lang-zh">极致赚钱</span>
+          </h2>
+          <div class="mb-1">
+            <span class="tag">Simulation</span>
+            <span class="tag lang-zh">模拟经营</span>
+          </div>
+          <p class="mb-4 text-gray-600 text-center text-sm">
+            <span class="lang-en">A tongue-in-cheek financial sim—can you achieve true freedom?</span>
+            <span class="lang-zh">黑色幽默风格理财模拟，体验财富自由！</span>
+          </p>
+          <a href="fu-money.html" class="w-full block text-center px-5 py-2 rounded-full bg-pink-600 text-white font-semibold hover:bg-pink-700 transition">
+            <span class="lang-en">Play Now</span><span class="lang-zh">进入</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="bg-white/90 border-t py-4 text-center text-gray-500 text-sm">
+    <span class="lang-en">&copy; 2025 dppskloine.xyz. All rights reserved.</span>
+    <span class="lang-zh">&copy; 2025 dppskloine.xyz. 版权所有。</span>
+  </footer>
+  <script>
+    function setLang(lang) {
+      document.body.className = 'lang-' + lang;
+      localStorage.setItem('language', lang);
+      updateBtn(lang);
+    }
+    function updateBtn(lang) {
+      document.getElementById('lang-en').className = lang === 'en'
+        ? "px-3 py-1 rounded-md bg-blue-600 text-white font-medium shadow hover:bg-blue-700"
+        : "px-3 py-1 rounded-md bg-gray-200 text-gray-700 font-medium shadow hover:bg-gray-300";
+      document.getElementById('lang-zh').className = lang === 'zh'
+        ? "px-3 py-1 rounded-md bg-blue-600 text-white font-medium shadow hover:bg-blue-700"
+        : "px-3 py-1 rounded-md bg-gray-200 text-gray-700 font-medium shadow hover:bg-gray-300";
+    }
+    document.getElementById('lang-en').onclick = () => setLang('en');
+    document.getElementById('lang-zh').onclick = () => setLang('zh');
+    let saved = localStorage.getItem('language');
+    if (saved === 'zh' || saved === 'en') setLang(saved);
+  </script>
 </body>
 </html>
