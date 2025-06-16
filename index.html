@@ -1,146 +1,740 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>dppskloine.xyz | Web Game Arcade</title>
-  <meta name="description" content="Play Tiny Racing, Idle Mage Life, FU Money and more. 精选网页小游戏聚合站，立即畅玩，无需下载！" />
-  <link rel="canonical" href="https://dppskloine.xyz/" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body.lang-en .lang-zh { display:none; }
-    body.lang-zh .lang-en { display:none; }
-    .tag{display:inline-block;background:#f9fafb;padding:0.15em 0.7em;border-radius:12px;font-size:0.9em;color:#60a5fa;margin-right:0.5em;}
-    .star{color:#fbbf24;}
-  </style>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='20' font-size='20'>🎮</text></svg>">
-</head>
-<body class="lang-en bg-gray-50 min-h-screen flex flex-col">
-  <!-- Header -->
-  <header class="bg-white/90 shadow-sm">
-    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center space-x-2">
-        <span class="rounded-full bg-gradient-to-br from-blue-500 to-green-500 w-10 h-10 flex items-center justify-center text-white text-2xl font-bold">🎮</span>
-        <span class="font-bold text-blue-700 text-xl">dppskloine.xyz</span>
-      </div>
-      <div class="space-x-1">
-        <button id="lang-en" class="px-3 py-1 rounded-md bg-blue-600 text-white font-medium shadow hover:bg-blue-700">EN</button>
-        <button id="lang-zh" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 font-medium shadow hover:bg-gray-300">中文</button>
-      </div>
-    </div>
-    <!-- 公告条 -->
-    <div class="w-full py-2 bg-blue-50 text-sm text-blue-700 font-medium text-center">
-      <span class="lang-en">🚀 New! <b>FU Money</b> is now online. Have fun!</span>
-      <span class="lang-zh">🚀 新上线：《极致赚钱 FU Money》欢迎体验！</span>
-    </div>
-  </header>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub - 游戏导航站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- Main -->
-  <main class="flex-1">
-    <section class="max-w-5xl mx-auto px-4 py-7">
-      <!-- 搜索框 -->
-      <div class="mb-6 max-w-xl mx-auto flex items-center gap-3">
-        <input class="grow rounded-lg px-4 py-2 shadow text-base border border-gray-200 focus:outline-blue-300" type="text" autocomplete="off"
-          placeholder="🔎 Search game / 搜索游戏 (静态展示, 点卡片进游戏)" disabled>
-        <span class="px-3 py-1 rounded text-gray-400 text-xs lang-en">Powered by dppskloine.xyz</span>
-        <span class="px-3 py-1 rounded text-gray-400 text-xs lang-zh">dppskloine.xyz荣誉出品</span>
-      </div>
-      <h1 class="text-center text-3xl md:text-4xl font-bold mb-8 text-blue-800">
-        <span class="lang-en">Web Indie Game Arcade</span>
-        <span class="lang-zh">网页精品小游戏合集</span>
-      </h1>
-      <div class="grid gap-8 grid-cols-1 md:grid-cols-3">
-        <!-- Game 1 -->
-        <div class="rounded-xl bg-white shadow hover:shadow-lg transition p-5 flex flex-col items-center relative">
-          <img src="https://via.placeholder.com/320x200/5a7bf6/fff?text=Tiny+Racing" alt="Tiny Racing" class="rounded mb-4 object-cover w-full aspect-video">
-          <div class="absolute top-3 right-3 flex items-center gap-1">
-            <span class="star">★★★★★</span>
-          </div>
-          <h2 class="text-xl font-bold mb-2 text-blue-700 text-center">
-            <span class="lang-en">Tiny Racing</span><span class="lang-zh">小赛车</span>
-          </h2>
-          <div class="mb-1">
-            <span class="tag">Racing</span>
-            <span class="tag lang-zh">竞速</span>
-          </div>
-          <p class="mb-4 text-gray-600 text-center text-sm">
-            <span class="lang-en">Retro pixel car fun, drift and compete on mini tracks!</span>
-            <span class="lang-zh">像素风小车漂移，体验微缩赛道速度！</span>
-          </p>
-          <a href="tiny-racing.html" class="w-full block text-center px-5 py-2 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
-            <span class="lang-en">Play Now</span>
-            <span class="lang-zh">进入</span>
-          </a>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            margin-top: 100px;
+            padding: 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 4rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.5)); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 3rem;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .categories {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .category-card:hover::before {
+            left: 100%;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #4ecdc4;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+        }
+
+        .game-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .game-link {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .game-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .game-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+
+        .game-info {
+            flex: 1;
+        }
+
+        .game-name {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .game-desc {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .hot-games {
+            max-width: 1200px;
+            margin: 4rem auto;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hot-games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .hot-game-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hot-game-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(255, 107, 107, 0.1), transparent 30%);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .hot-game-card:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hot-game-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hot-game-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #45b7d1, #96ceb4);
+            border-radius: 12px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hot-game-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hot-game-rating {
+            color: #ffd700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer {
+            margin-top: 6rem;
+            padding: 3rem 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(78, 205, 196, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-particles"></div>
+    
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">🎮 GameHub</div>
+            <nav class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#categories">游戏分类</a>
+                <a href="#hot">热门推荐</a>
+                <a href="#new">最新游戏</a>
+                <a href="#about">关于</a>
+            </nav>
         </div>
-        <!-- Game 2 -->
-        <div class="rounded-xl bg-white shadow hover:shadow-lg transition p-5 flex flex-col items-center relative">
-          <img src="https://via.placeholder.com/320x200/50c878/fff?text=Idle+Mage+Life" alt="Idle Mage Life" class="rounded mb-4 object-cover w-full aspect-video">
-          <div class="absolute top-3 right-3 flex items-center gap-1">
-            <span class="star">★★★★☆</span>
-          </div>
-          <h2 class="text-xl font-bold mb-2 text-green-700 text-center">
-            <span class="lang-en">Idle Mage Life</span><span class="lang-zh">法师挂机人生</span>
-          </h2>
-          <div class="mb-1">
-            <span class="tag">Idle</span>
-            <span class="tag">Strategy</span>
-            <span class="tag lang-zh">挂机</span>
-            <span class="tag lang-zh">策略</span>
-          </div>
-          <p class="mb-4 text-gray-600 text-center text-sm">
-            <span class="lang-en">Grow your magical powers and gather riches in this idle adventure!</span>
-            <span class="lang-zh">修炼法术打造财富，轻松挂机冒险！</span>
-          </p>
-          <a href="idle-mage-life.html" class="w-full block text-center px-5 py-2 rounded-full bg-green-600 text-white font-semibold hover:bg-green-700 transition">
-            <span class="lang-en">Play Now</span><span class="lang-zh">进入</span>
-          </a>
+    </header>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">GameHub</h1>
+            <p class="hero-subtitle">发现最好玩的游戏，一站式游戏导航平台</p>
+            
+            <div class="search-container">
+                <input type="text" class="search-box" placeholder="搜索你喜欢的游戏..." id="searchBox">
+            </div>
+        </section>
+
+        <section class="categories" id="categories">
+            <div class="category-card">
+                <h3 class="category-title">
+                    <span class="category-icon">⚔️</span>
+                    动作游戏
+                </h3>
+                <div class="game-links">
+                    <a href="#" class="game-link">
+                        <div class="game-icon">GTA</div>
+                        <div class="game-info">
+                            <div class="game-name">侠盗猎车手</div>
+                            <div class="game-desc">开放世界动作冒险游戏</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">COD</div>
+                        <div class="game-info">
+                            <div class="game-name">使命召唤</div>
+                            <div class="game-desc">第一人称射击游戏</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">AC</div>
+                        <div class="game-info">
+                            <div class="game-name">刺客信条</div>
+                            <div class="game-desc">历史题材动作冒险</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <h3 class="category-title">
+                    <span class="category-icon">🏆</span>
+                    竞技游戏
+                </h3>
+                <div class="game-links">
+                    <a href="#" class="game-link">
+                        <div class="game-icon">LOL</div>
+                        <div class="game-info">
+                            <div class="game-name">英雄联盟</div>
+                            <div class="game-desc">5v5团队竞技游戏</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">CS</div>
+                        <div class="game-info">
+                            <div class="game-name">CS2</div>
+                            <div class="game-desc">经典FPS竞技游戏</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">OW</div>
+                        <div class="game-info">
+                            <div class="game-name">守望先锋</div>
+                            <div class="game-desc">英雄射击游戏</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <h3 class="category-title">
+                    <span class="category-icon">🎲</span>
+                    策略游戏
+                </h3>
+                <div class="game-links">
+                    <a href="#" class="game-link">
+                        <div class="game-icon">CIV</div>
+                        <div class="game-info">
+                            <div class="game-name">文明6</div>
+                            <div class="game-desc">回合制策略游戏</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">AOE</div>
+                        <div class="game-info">
+                            <div class="game-name">帝国时代</div>
+                            <div class="game-desc">即时战略游戏</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">SC</div>
+                        <div class="game-info">
+                            <div class="game-name">星际争霸</div>
+                            <div class="game-desc">科幻战略游戏</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <h3 class="category-title">
+                    <span class="category-icon">🎮</span>
+                    角色扮演
+                </h3>
+                <div class="game-links">
+                    <a href="#" class="game-link">
+                        <div class="game-icon">原</div>
+                        <div class="game-info">
+                            <div class="game-name">原神</div>
+                            <div class="game-desc">开放世界RPG</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">FF</div>
+                        <div class="game-info">
+                            <div class="game-name">最终幻想</div>
+                            <div class="game-desc">经典JRPG系列</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">WOW</div>
+                        <div class="game-info">
+                            <div class="game-name">魔兽世界</div>
+                            <div class="game-desc">大型多人在线RPG</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <h3 class="category-title">
+                    <span class="category-icon">🏎️</span>
+                    竞速游戏
+                </h3>
+                <div class="game-links">
+                    <a href="#" class="game-link">
+                        <div class="game-icon">极</div>
+                        <div class="game-info">
+                            <div class="game-name">极限竞速</div>
+                            <div class="game-desc">真实赛车模拟</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">NFS</div>
+                        <div class="game-info">
+                            <div class="game-name">极品飞车</div>
+                            <div class="game-desc">街头赛车游戏</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">F1</div>
+                        <div class="game-info">
+                            <div class="game-name">F1赛车</div>
+                            <div class="game-desc">一级方程式赛车</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="category-card">
+                <h3 class="category-title">
+                    <span class="category-icon">🎯</span>
+                    休闲游戏
+                </h3>
+                <div class="game-links">
+                    <a href="#" class="game-link">
+                        <div class="game-icon">糖</div>
+                        <div class="game-info">
+                            <div class="game-name">糖果传奇</div>
+                            <div class="game-desc">三消休闲游戏</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">植</div>
+                        <div class="game-info">
+                            <div class="game-name">植物大战僵尸</div>
+                            <div class="game-desc">塔防策略游戏</div>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link">
+                        <div class="game-icon">愤</div>
+                        <div class="game-info">
+                            <div class="game-name">愤怒的小鸟</div>
+                            <div class="game-desc">物理弹射游戏</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="hot-games" id="hot">
+            <h2 class="section-title">🔥 热门推荐</h2>
+            <div class="hot-games-grid">
+                <div class="hot-game-card">
+                    <div class="hot-game-image">🎮</div>
+                    <div class="hot-game-name">赛博朋克2077</div>
+                    <div class="hot-game-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="hot-game-card">
+                    <div class="hot-game-image">⚔️</div>
+                    <div class="hot-game-name">艾尔登法环</div>
+                    <div class="hot-game-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="hot-game-card">
+                    <div class="hot-game-image">🎲</div>
+                    <div class="hot-game-name">博德之门3</div>
+                    <div class="hot-game-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="hot-game-card">
+                    <div class="hot-game-image">🏎️</div>
+                    <div class="hot-game-name">地平线5</div>
+                    <div class="hot-game-rating">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 GameHub - 游戏导航站. 发现更多精彩游戏</p>
+            <p>让游戏点亮生活 🎮</p>
         </div>
-        <!-- Game 3 -->
-        <div class="rounded-xl bg-white shadow hover:shadow-lg transition p-5 flex flex-col items-center relative">
-          <img src="https://via.placeholder.com/320x200/db279c/fff?text=FU+Money" alt="FU Money" class="rounded mb-4 object-cover w-full aspect-video">
-          <div class="absolute top-3 right-3 flex items-center gap-1">
-            <span class="star">★★★★☆</span>
-          </div>
-          <h2 class="text-xl font-bold mb-2 text-pink-700 text-center">
-            <span class="lang-en">FU Money</span><span class="lang-zh">极致赚钱</span>
-          </h2>
-          <div class="mb-1">
-            <span class="tag">Simulation</span>
-            <span class="tag lang-zh">模拟经营</span>
-          </div>
-          <p class="mb-4 text-gray-600 text-center text-sm">
-            <span class="lang-en">A tongue-in-cheek financial sim—can you achieve true freedom?</span>
-            <span class="lang-zh">黑色幽默风格理财模拟，体验财富自由！</span>
-          </p>
-          <a href="fu-money.html" class="w-full block text-center px-5 py-2 rounded-full bg-pink-600 text-white font-semibold hover:bg-pink-700 transition">
-            <span class="lang-en">Play Now</span><span class="lang-zh">进入</span>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer class="bg-white/90 border-t py-4 text-center text-gray-500 text-sm">
-    <span class="lang-en">&copy; 2025 dppskloine.xyz. All rights reserved.</span>
-    <span class="lang-zh">&copy; 2025 dppskloine.xyz. 版权所有。</span>
-  </footer>
-  <script>
-    function setLang(lang) {
-      document.body.className = 'lang-' + lang;
-      localStorage.setItem('language', lang);
-      updateBtn(lang);
-    }
-    function updateBtn(lang) {
-      document.getElementById('lang-en').className = lang === 'en'
-        ? "px-3 py-1 rounded-md bg-blue-600 text-white font-medium shadow hover:bg-blue-700"
-        : "px-3 py-1 rounded-md bg-gray-200 text-gray-700 font-medium shadow hover:bg-gray-300";
-      document.getElementById('lang-zh').className = lang === 'zh'
-        ? "px-3 py-1 rounded-md bg-blue-600 text-white font-medium shadow hover:bg-blue-700"
-        : "px-3 py-1 rounded-md bg-gray-200 text-gray-700 font-medium shadow hover:bg-gray-300";
-    }
-    document.getElementById('lang-en').onclick = () => setLang('en');
-    document.getElementById('lang-zh').onclick = () => setLang('zh');
-    let saved = localStorage.getItem('language');
-    if (saved === 'zh' || saved === 'en') setLang(saved);
-  </script>
+    </footer>
+
+    <script>
+        // 创建浮动粒子效果
+        function createParticles() {
+            const container = document.querySelector('.floating-particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // 搜索功能
+        function initSearch() {
+            const searchBox = document.getElementById('searchBox');
+            const gameLinks = document.querySelectorAll('.game-link');
+
+            searchBox.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                
+                gameLinks.forEach(link => {
+                    const gameName = link.querySelector('.game-name').textContent.toLowerCase();
+                    const gameDesc = link.querySelector('.game-desc').textContent.toLowerCase();
+                    
+                    if (gameName.includes(query) || gameDesc.includes(query)) {
+                        link.style.display = 'flex';
+                        link.style.animation = 'fadeIn 0.3s ease';
+                    } else {
+                        link.style.display = query === '' ? 'flex' : 'none';
+                    }
+                });
+            });
+        }
+
+        // 平滑滚动
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // 添加滚动动画
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'slideUp 0.6s ease forwards';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.category-card, .hot-game-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // 添加CSS动画
+        function addAnimationStyles() {
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                
+                @keyframes slideUp {
+                    from { 
+                        opacity: 0; 
+                        transform: translateY(30px); 
+                    }
+                    to { 
+                        opacity: 1; 
+                        transform: translateY(0); 
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // 初始化所有功能
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            initSearch();
+            initSmoothScroll();
+            initScrollAnimations();
+            addAnimationStyles();
+        });
+
+        // 添加鼠标跟踪效果
+        document.addEventListener('mousemove', function(e) {
+            const cursor = document.querySelector('.cursor');
+            if (!cursor) {
+                const newCursor = document.createElement('div');
+                newCursor.className = 'cursor';
+                newCursor.style.cssText = `
+                    position: fixed;
+                    width: 20px;
+                    height: 20px;
+                    background: radial-gradient(circle, rgba(78, 205, 196, 0.3), transparent);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    transition: transform 0.1s ease;
+                `;
+                document.body.appendChild(newCursor);
+            }
+            
+            const currentCursor = document.querySelector('.cursor');
+            currentCursor.style.left = e.clientX - 10 + 'px';
+            currentCursor.style.top = e.clientY - 10 + 'px';
+        });
+    </script>
 </body>
 </html>
